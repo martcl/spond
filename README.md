@@ -10,6 +10,62 @@ This codebase is a work in progress and is not yet ready for production use.
 npm install spond
 ```
 
+## How to use
+
+### Function: `createUserAccessToken`
+
+**Description:** This function creates a user access token by sending a POST request to the spond API login endpoint using the provided username and password.
+
+**Usage Example:**
+
+```javascript
+const { createUserAccessToken } = require('spond');
+
+try {
+  const accessToken = await createUserAccessToken(
+    'user@example.com',
+    'password123'
+  );
+  console.log('Access token:', accessToken);
+} catch (error) {
+  console.error('Authentication failed:', error.message);
+}
+```
+
+### Function: `getGroups`
+
+**Description**: This function fetches groups from the API using the provided access token and returns an array of group objects.
+
+**Usage Example:**
+
+```javascript
+const { getGroups } = require('spond');
+
+try {
+  const groups = await getGroups(accessToken);
+  console.log('Groups:', groups);
+} catch (error) {
+  console.error('Failed to get groups:', error.message);
+}
+```
+
+### Function: `getEvents`
+
+**Description**: This function fetches events from the API using the provided access token and returns an array of event objects.
+
+**Usage Example:**
+
+```javascript
+const { getEvents } = require('spond');
+
+try {
+  const events = await getEvents(accessToken, {groupId: '123456789'});
+  console.log('Events:', events);
+} catch (error) {
+  console.error('Failed to get events:', error.message);
+}
+```
+
 ## Local development
 
 To run the code locally you need to have Node.js installed. Then you can run the following commands in the root of the project:

@@ -35,7 +35,7 @@ const { SPOND_API_URL } = require('./utils');
  * Fetches groups from the API and caches them.
  *
  * This function fetches groups from the API using the provided access token,
- * caches the retrieved data, and returns an array of group objects.
+ * and returns an array of group objects.
  *
  * @param {string} accessToken - The user's access token.
  * @returns {Promise<Array<Group>>} An array of group objects.
