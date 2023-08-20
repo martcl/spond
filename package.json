@@ -11,6 +11,9 @@
   ],
   "author": "martin clementz",
   "license": "GPL-3.0",
+  "publishConfig": {
+    "@martcl:registry": "https://npm.pkg.github.com"
+  },
   "devDependencies": {
     "dotenv": "^16.3.1",
     "jest": "^29.6.2"
