@@ -1,0 +1,18 @@
+{
+  "name": "spond",
+  "version": "0.0.1",
+  "description": "Unofficial library to access data from the Spond API.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "NODE_ENV=test && jest"
+  },
+  "keywords": [
+    "spond"
+  ],
+  "author": "martin clementz",
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "dotenv": "^16.3.1",
+    "jest": "^29.6.2"
+  }
+}

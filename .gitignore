@@ -1,0 +1,4 @@
+.DS_Store
+.nmp
+node_modules
+.env
