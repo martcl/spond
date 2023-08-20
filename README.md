@@ -17,7 +17,8 @@ npm install ...
 To run the code locally you need to have Node.js installed. Then you can run the following commands in the root of the project:
 
 ```bash
-git clone somerepo-i-havent-created-yet
+git clone https://github.com/martcl/spond.git
+cd spond
 nvm use
 npm install
 
