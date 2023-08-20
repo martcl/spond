@@ -1,5 +1,6 @@
 tests
 examples
 .gitignore
-.env.example
+.env.example 
+.env
 .github
