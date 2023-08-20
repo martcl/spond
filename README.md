@@ -6,10 +6,8 @@ This codebase is a work in progress and is not yet ready for production use.
 
 ## Installation
 
-The package is not yet published to npm. But it is work in progress. TODO:
-
 ```bash
-npm install ...
+npm install spond
 ```
 
 ## Local development
