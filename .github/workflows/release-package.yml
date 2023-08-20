@@ -13,12 +13,19 @@ jobs:
   tests:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: git checkout
+        uses: actions/checkout@v3
+
+      - name: setup node
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
-      - run: npm ci
-      - run: npm test
+
+      - name: install dependancies
+        run: npm ci
+
+      - name: run tests
+        run: npm test
 
   publish-gpr:
     needs: tests
@@ -27,12 +34,19 @@ jobs:
       packages: write
       contents: read
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: git checkout
+        uses: actions/checkout@v3
+
+      - name: setup node
+        uses: actions/setup-node@v3
         with:
           node-version-file: '.nvmrc'
           registry-url: https://npm.pkg.github.com/
-      - run: npm ci
-      - run: npm publish
+
+      - name: install dependancies
+        run: npm ci
+
+      - name: publish to github package registry
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
