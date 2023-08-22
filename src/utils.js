@@ -1,4 +1,4 @@
-const SPOND_API_URL = process.env.SPOND_API_URL || 'https://spond.com/api/2.1/';
+const SPOND_API_URL = process.env.SPOND_API_URL || 'https://spond.com/core/v1/';
 
 /** 
  * @param {any} date 

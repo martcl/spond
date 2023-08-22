@@ -7,13 +7,13 @@ const { isDate, SPOND_API_URL } = require('./utils');
  * @property {string} creatorId
  * @property {string} description
  * @property {string} [picture]
- * 
+ *
  * @property {Array<EventOwner>} owners
- * 
+ *
  * @property {Date} startTimestamp
  * @property {Date} endTimestamp
  * @property {Date} [meetupTimestamp]
- * 
+ *
  * @property {Location} [location]
  * @property {{group: EventGroup, profiles: Array<any>, guardians: Array<any>}} recipients
  * @property {EventResponses} responses
@@ -32,23 +32,23 @@ const { isDate, SPOND_API_URL } = require('./utils');
  * @property {string} type
  * @property {string} updated TODO: Find out what this time is
  * @property {boolean} matchEvent TODO: Find out what this is
- * 
+ *
  * @typedef {Object} EventOwner - Represents a event owner.
  * @property {string} id
  * @property {string} response
- * 
+ *
  * @typedef {Object} SubGroup - Represents a sub group.
  * @property {string} id
  * @property {string} name
  * @property {string} color
- * 
+ *
  * @typedef {Object} Member - Represents a event recipient.
  * @property {string} id
  * @property {string} firstName
  * @property {string} lastName
  * @property {string} respondent
  * @property {Array<any>} guardians
- * 
+ *
  * @typedef {Object} EventGroup - Represents a event group.
  * @property {string} id
  * @property {string} contactPersonId
@@ -58,14 +58,14 @@ const { isDate, SPOND_API_URL } = require('./utils');
  * @property {Array<Member>} members
  * @property {number} type
  * @property {string} activity
- * 
+ *
  * @typedef {Object} EventResponses - Represents event responses.
  * @property {Array<string>} acceptedIds
  * @property {Array<string>} declinedIds
  * @property {Array<string>} unansweredIds
  * @property {Array<string>} waitinglistIds
  * @property {Array<string>} unconfirmedIds
- * 
+ *
  * @typedef {Object} OpenTasks - Represents open tasks.
  * @property {string} id
  * @property {string} name
@@ -77,7 +77,7 @@ const { isDate, SPOND_API_URL } = require('./utils');
  * @property {Array<string>} accepted
  * @property {Array<string>} declined
  * @property {Array<string>} unanswered
- * 
+ *
  * @typedef {Object} Attachment - Represents an attachment.
  * @property {string} id
  * @property {string} media
@@ -85,7 +85,7 @@ const { isDate, SPOND_API_URL } = require('./utils');
  * @property {string} title
  * @property {string} ownerId
  * @property {Date} timestamp
- * 
+ *
  * @typedef {Object} Location - Represents a location.
  * @property {string} id
  * @property {string} feature
@@ -95,7 +95,7 @@ const { isDate, SPOND_API_URL } = require('./utils');
  * @property {string} country
  * @property {string} administrativeAreaLevel1
  * @property {string} locality
- * 
+ *
  */
 
 /**
@@ -115,12 +115,18 @@ const { isDate, SPOND_API_URL } = require('./utils');
  */
 async function getEvents(
   accessToken,
-  { maxEvents = 50, includeScheduled = false, ...options }
+  options
 ) {
+  const { maxEvents = 50, includeScheduled = false } = options;
+
   const params = new URLSearchParams();
+
+  if (!options.groupId) {
+    throw new Error('groupId is required');
+  }
   params.append('groupId', options.groupId);
-  params.append('includeScheduled', options.includeScheduled);
-  params.append('maxEvents', options.maxEvents);
+  params.append('includeScheduled', includeScheduled);
+  params.append('maxEvents', maxEvents);
 
   if (isDate(options.maxEnd)) {
     params.append('maxEnd', options.maxEnd.toISOString());
