@@ -13,7 +13,8 @@
     "spond"
   ],
   "files": [
-    "src"
+    "src",
+    "types"
   ],
   "author": "martin clementz",
   "license": "GPL-3.0",
