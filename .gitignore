@@ -1,4 +1,15 @@
-.DS_Store
-.nmp
+# dependencies
 node_modules
+
+# production
+build
+dist
+docs
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local environment
 .env
