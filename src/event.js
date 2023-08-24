@@ -106,8 +106,8 @@ const { isDate, SPOND_API_URL, formatDate } = require('./utils');
  * @param {string} [options.groupId] - The ID of the group to fetch events from.
  * @param {boolean} [options.scheduled] - Whether to include scheduled events.
  * @param {boolean} [options.includeHidden] - Whether to include hidden events.
- * @param {Date} [options.maxEndTimestamp] - The maximum end date for events (optional).
- * @param {Date} [options.minEndTimestamp] - The minimum end date for events (optional).
+ * @param {Date} [options.maxEndTimestamp] - The maximum end date for events (optional). ISO 8601 format.
+ * @param {Date} [options.minEndTimestamp] - The minimum end date for events (optional). ISO 8601 format.
  * @param {number} [options.includeComments] - Whether to include comments.
  * @param {string} [options.order] - The order of the events (default is 'asc').
  * @param {number} [options.max] - The maximum number of events to fetch (default is 50).
@@ -136,12 +136,12 @@ async function getEvents(
     params.append('groupId', options.groupId);
   }
 
-  if (isDate(options.maxEnd)) {
-    params.append('maxEndTimestamp', formatDate(options.maxEndTimestamp));
+  if (options.maxEndTimestamp) {
+    params.append('maxEndTimestamp', options.maxEndTimestamp);
   }
 
-  if (isDate(options.minEnd)) {
-    params.append('minEndTimestamp', formatDate(options.minEndTimestamp));
+  if (options.minEndTimestamp) {
+    params.append('minEndTimestamp', options.minEndTimestamp);
   }
 
   try {
