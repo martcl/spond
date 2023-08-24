@@ -1,6 +1,6 @@
 {
   "name": "spond",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Unofficial library to access data from the Spond API.",
   "main": "src/index.js",
   "scripts": {
