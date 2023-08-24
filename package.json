@@ -6,7 +6,7 @@
   "types": "types/index.d.ts",
   "scripts": {
     "test": "NODE_ENV=test && jest",
-    "prebuild:types": "rimraf ./build",
+    "prebuild:types": "rimraf ./types",
     "build:types": "tsc -p ./tsconfig.json --outDir types && api-extractor run"
   },
   "keywords": [
