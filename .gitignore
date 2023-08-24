@@ -5,6 +5,7 @@ node_modules
 build
 dist
 docs
+types
 
 # debug
 npm-debug.log*

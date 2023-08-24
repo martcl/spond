@@ -3,13 +3,17 @@
   "version": "0.0.5",
   "description": "Unofficial library to access data from the Spond API.",
   "main": "src/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "test": "NODE_ENV=test && jest",
     "prebuild:types": "rimraf ./build",
-    "build:types": "tsc -p ./tsconfig.json --outDir build && api-extractor run"
+    "build:types": "tsc -p ./tsconfig.json --outDir types && api-extractor run"
   },
   "keywords": [
     "spond"
+  ],
+  "files": [
+    "src"
   ],
   "author": "martin clementz",
   "license": "GPL-3.0",

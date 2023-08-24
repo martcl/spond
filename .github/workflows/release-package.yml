@@ -46,6 +46,9 @@ jobs:
       - name: install dependancies
         run: npm ci
 
+      - name: build types
+        run: npm run build:types
+
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
