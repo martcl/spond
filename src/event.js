@@ -102,12 +102,14 @@ const { isDate, SPOND_API_URL } = require('./utils');
  * Fetches events from the API.
  *
  * @param {string} accessToken - User access token.
- * @param {Object} options - Configuration options for fetching events.
- * @param {string} options.groupId - The ID of the group to fetch events from.
- * @param {boolean} options.includeScheduled - Whether to include scheduled events.
- * @param {boolean} options.includeHidden - Whether to include hidden events.
- * @param {Date} options.maxEndTimestamp - The maximum end date for events (optional).
- * @param {number} options.max - The maximum number of events to fetch (default is 50).
+ * @param {Object} [options] - Configuration options for fetching events.
+ * @param {string} [options.groupId] - The ID of the group to fetch events from.
+ * @param {boolean} [options.scheduled] - Whether to include scheduled events.
+ * @param {boolean} [options.includeHidden] - Whether to include hidden events.
+ * @param {Date} [options.maxEndTimestamp] - The maximum end date for events (optional).
+ * @param {Date} [options.minEndTimestamp] - The minimum end date for events (optional).
+ * @param {number} [options.includeComments] - Whether to include comments.
+ * @param {number} [options.max] - The maximum number of events to fetch (default is 50).
  * @throws {Error} Throws an error if any of the date options is not a valid Date object.
  * @returns {Promise<Array<Event>>} An array of event objects.
  */
@@ -115,13 +117,14 @@ async function getEvents(
   accessToken,
   options
 ) {
-  const { maxEvents = 50, includeScheduled = false } = options;
+  const { maxEvents = 50, scheduled = true, includeComments = false } = options;
 
   const params = new URLSearchParams();
 
   params.append('groupId', options.groupId);
-  params.append('scheduled', includeScheduled);
+  params.append('scheduled', scheduled);
   params.append('max', maxEvents);
+  params.append('includeComments', includeComments);
 
   if (options.includeHidden) {
     params.append('includeHidden', options.includeHidden);
@@ -133,6 +136,10 @@ async function getEvents(
 
   if (isDate(options.maxEnd)) {
     params.append('maxEndTimestamp', options.maxEnd.toISOString());
+  }
+
+  if (isDate(options.minEnd)) {
+    params.append('minEndTimestamp', options.maxEnd.toISOString());
   }
 
   try {
