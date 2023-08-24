@@ -46,6 +46,7 @@ describe('Spond events', () => {
     const groups = await getGroups(accessTokenCached);
     const events = await getEvents(accessTokenCached, {
       groupId: groups.find((group) => group.name == 'My Spond group 1').id,
+      includeHidden: true,
     });
     expect(events).not.toBeUndefined();
   });
@@ -54,6 +55,7 @@ describe('Spond events', () => {
     const groups = await getGroups(accessTokenCached);
     const events = await getEvents(accessTokenCached, {
       groupId: groups.find((group) => group.name == 'My Spond group 1').id,
+      includeHidden: true,
     });
 
     const event = events.find((event) => event.heading == 'Test event 1');
