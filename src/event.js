@@ -1,4 +1,4 @@
-const { isDate, SPOND_API_URL } = require('./utils');
+const { isDate, SPOND_API_URL, formatDate } = require('./utils');
 
 /**
  * @typedef {Object} Event - Represents an event.
@@ -109,6 +109,7 @@ const { isDate, SPOND_API_URL } = require('./utils');
  * @param {Date} [options.maxEndTimestamp] - The maximum end date for events (optional).
  * @param {Date} [options.minEndTimestamp] - The minimum end date for events (optional).
  * @param {number} [options.includeComments] - Whether to include comments.
+ * @param {string} [options.order] - The order of the events (default is 'asc').
  * @param {number} [options.max] - The maximum number of events to fetch (default is 50).
  * @throws {Error} Throws an error if any of the date options is not a valid Date object.
  * @returns {Promise<Array<Event>>} An array of event objects.
@@ -117,14 +118,15 @@ async function getEvents(
   accessToken,
   options
 ) {
-  const { maxEvents = 50, scheduled = true, includeComments = false } = options;
+  const { maxEvents = 50, scheduled = true, includeComments = false, order = "asc" } = options;
 
   const params = new URLSearchParams();
 
-  params.append('groupId', options.groupId);
   params.append('scheduled', scheduled);
   params.append('max', maxEvents);
   params.append('includeComments', includeComments);
+  params.append('order', order);
+
 
   if (options.includeHidden) {
     params.append('includeHidden', options.includeHidden);
@@ -135,11 +137,11 @@ async function getEvents(
   }
 
   if (isDate(options.maxEnd)) {
-    params.append('maxEndTimestamp', options.maxEnd.toISOString());
+    params.append('maxEndTimestamp', formatDate(options.maxEndTimestamp));
   }
 
   if (isDate(options.minEnd)) {
-    params.append('minEndTimestamp', options.maxEnd.toISOString());
+    params.append('minEndTimestamp', formatDate(options.minEndTimestamp));
   }
 
   try {
