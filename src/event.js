@@ -105,11 +105,9 @@ const { isDate, SPOND_API_URL } = require('./utils');
  * @param {Object} options - Configuration options for fetching events.
  * @param {string} options.groupId - The ID of the group to fetch events from.
  * @param {boolean} options.includeScheduled - Whether to include scheduled events.
- * @param {Date} options.maxEnd - The maximum end date for events (optional).
- * @param {Date} options.minEnd - The minimum end date for events (optional).
- * @param {Date} options.maxStart - The maximum start date for events (optional).
- * @param {Date} options.minStart - The minimum start date for events (optional).
- * @param {number} options.maxEvents - The maximum number of events to fetch (default is 50).
+ * @param {boolean} options.includeHidden - Whether to include hidden events.
+ * @param {Date} options.maxEndTimestamp - The maximum end date for events (optional).
+ * @param {number} options.max - The maximum number of events to fetch (default is 50).
  * @throws {Error} Throws an error if any of the date options is not a valid Date object.
  * @returns {Promise<Array<Event>>} An array of event objects.
  */
@@ -121,27 +119,20 @@ async function getEvents(
 
   const params = new URLSearchParams();
 
-  if (!options.groupId) {
-    throw new Error('groupId is required');
-  }
   params.append('groupId', options.groupId);
-  params.append('includeScheduled', includeScheduled);
-  params.append('maxEvents', maxEvents);
+  params.append('scheduled', includeScheduled);
+  params.append('max', maxEvents);
+
+  if (options.includeHidden) {
+    params.append('includeHidden', options.includeHidden);
+  }
+
+  if (options.groupId) {
+    params.append('groupId', options.groupId);
+  }
 
   if (isDate(options.maxEnd)) {
-    params.append('maxEnd', options.maxEnd.toISOString());
-  }
-
-  if (isDate(options.minEnd)) {
-    params.append('minEnd', options.minEnd.toISOString());
-  }
-
-  if (isDate(options.maxStart)) {
-    params.append('maxStart', options.maxStart.toISOString());
-  }
-
-  if (isDate(options.minStart)) {
-    params.append('minStart', options.minStart.toISOString());
+    params.append('maxEndTimestamp', options.maxEnd.toISOString());
   }
 
   try {
