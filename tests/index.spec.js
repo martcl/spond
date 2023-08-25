@@ -48,7 +48,7 @@ describe('Spond events', () => {
       groupId: groups.find((group) => group.name == 'My Spond group 1').id,
       includeHidden: true,
     });
-    expect(events).not.toBeUndefined();
+    expect(events.length).toBe(2);
   });
 
   test('Event has basic info', async () => {
@@ -58,65 +58,100 @@ describe('Spond events', () => {
       includeHidden: true,
     });
 
-    const event = events.find((event) => event.heading == 'Test event 1');
-
-    expect(event).not.toBeUndefined();
-
+    const eventOne = events.find((event) => event.id == 'BD957E98DF6F48EFAACEFCA3364847F7');
+    
     // Basic info
-    expect(event.createdTime).toBe('2023-08-19T20:19:54.236Z');
-    expect(event.recipients.group.name).toBe('My Spond group 1');
-    expect(event.heading).toBe('Test event 1');
-    expect(event.description).toBe('This is a cool test event!');
+    expect(eventOne.createdTime).toBe('2023-08-19T20:19:54.236Z');
+    expect(eventOne.recipients.group.name).toBe('My Spond group 1');
+    expect(eventOne.heading).toBe('Test event 1');
+    expect(eventOne.description).toBe('This is a cool test event!');
 
     // Time
-    expect(event.startTimestamp).toBe('2023-08-19T21:00:00Z');
-    expect(event.endTimestamp).toBe('2023-08-19T22:00:00Z');
-    expect(event.meetupTimestamp).toBe('2023-08-19T20:50:00Z');
+    expect(eventOne.startTimestamp).toBe('2023-08-19T21:00:00Z');
+    expect(eventOne.endTimestamp).toBe('2023-08-19T22:00:00Z');
+    expect(eventOne.meetupTimestamp).toBe('2023-08-19T20:50:00Z');
 
     // Location
-    expect(event.location.address).toBe('Trondheim');
-    expect(event.location.latitude).toBe(63.430515);
-    expect(event.location.longitude).toBe(10.395053);
-    expect(event.location.country).toBe('NO');
-    expect(event.location.administrativeAreaLevel1).toBe('Trøndelag');
-    expect(event.location.locality).toBe('Trondheim');
+    expect(eventOne.location.address).toBe('Trondheim');
+    expect(eventOne.location.latitude).toBe(63.430515);
+    expect(eventOne.location.longitude).toBe(10.395053);
+    expect(eventOne.location.country).toBe('NO');
+    expect(eventOne.location.administrativeAreaLevel1).toBe('Trøndelag');
+    expect(eventOne.location.locality).toBe('Trondheim');
 
     // Responses
-    expect(event.responses.acceptedIds).not.toBeUndefined();
-    expect(event.responses.declinedIds).not.toBeUndefined();
-    expect(event.responses.unansweredIds).not.toBeUndefined();
-    expect(event.responses.waitinglistIds).not.toBeUndefined();
+    expect(eventOne.responses.acceptedIds).not.toBeUndefined();
+    expect(eventOne.responses.declinedIds).not.toBeUndefined();
+    expect(eventOne.responses.unansweredIds).not.toBeUndefined();
+    expect(eventOne.responses.waitinglistIds).not.toBeUndefined();
 
     // Group
-    expect(event.recipients.group.subGroups.length).toBe(2);
+    expect(eventOne.recipients.group.subGroups.length).toBe(2);
     expect(
-      event.recipients.group.subGroups.find(
+      eventOne.recipients.group.subGroups.find(
         (subgroup) => subgroup.name === 'Alfa'
       ).color
     ).toBe('#0084ff');
     expect(
-      event.recipients.group.subGroups.find(
+      eventOne.recipients.group.subGroups.find(
         (subgroup) => subgroup.name === 'Beta'
       ).color
     ).toBe('#ff5ca1');
     expect(
-      event.recipients.group.members.filter(
+      eventOne.recipients.group.members.filter(
         (member) => member.firstName === 'Martin'
       ).length
     ).toBe(1);
 
     // Tasks
-    expect(event.tasks.openTasks.length).toBe(1);
-    expect(event.tasks.openTasks[0].name).toBe('This is a task');
-    expect(event.tasks.openTasks[0].description).toBe(
+    expect(eventOne.tasks.openTasks.length).toBe(1);
+    expect(eventOne.tasks.openTasks[0].name).toBe('This is a task');
+    expect(eventOne.tasks.openTasks[0].description).toBe(
       'This is a description of the task'
     );
 
     // Other
-    expect(event.creatorId).not.toBeUndefined();
-    expect(event.autoAccept).not.toBeUndefined();
-    expect(event.expired).toBe(true);
+    expect(eventOne.creatorId).not.toBeUndefined();
+    expect(eventOne.autoAccept).not.toBeUndefined();
+    expect(eventOne.expired).toBe(true);
+    expect(eventOne.autoReminderType).toBe('DISABLED');
+    expect(eventOne.participantsHidden).toBe(false);
+    expect(eventOne.registered).toBe(false);
+    expect(eventOne.commentsDisabled).toBe(false);
+    expect(eventOne.type).toBe('EVENT');
+
+    // test for eventTwo spesific stuff
+    const eventTwo = events.find((event) => event.id == 'D8D4214F34904689ADD55D21BC5F1D45');
+
+
+    expect(eventTwo.heading).toBe('Another event');
+    expect(eventTwo.attachments[0].id).toBe('A113B29161C140CBA3282558F4619C3F');
+    expect(eventTwo.attachments[0].media).toBe('https://spond.com/storage/upload/CC447739024B1E7CF44F2676F4B5B903/1692551339_289352DC/dachshund.jpeg');
+    expect(eventTwo.attachments[0].type).toBe(1);
+    expect(eventTwo.attachments[0].timestamp).toBe('2023-08-20T17:09:27.850Z');
   });
+
+  test('Event search minEndTimestamp', async () => {
+    const groups = await getGroups(accessTokenCached);
+    const events = await getEvents(accessTokenCached, {
+      groupId: groups.find((group) => group.name == 'My Spond group 1').id,
+      includeHidden: true,
+      minEndTimestamp: new Date('2024-08-19T22:00:00Z').toISOString(),
+    });
+    expect(events.length).toBe(1);
+    expect(events[0].heading).toBe('Another event');
+  })
+
+  test('Event search maxEndTimestamp', async () => {
+    const groups = await getGroups(accessTokenCached);
+    const events = await getEvents(accessTokenCached, {
+      groupId: groups.find((group) => group.name == 'My Spond group 1').id,
+      includeHidden: true,
+      maxEndTimestamp: new Date().toISOString(),
+    });
+    expect(events.length).toBe(1);
+    expect(events[0].heading).toBe('Test event 1');
+  })
 });
 
 describe('Spond posts', () => {
