@@ -3,9 +3,8 @@ node_modules
 
 # production
 build
-dist
 docs
-types
+types.d.ts
 
 # debug
 npm-debug.log*

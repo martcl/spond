@@ -1,0 +1,4 @@
+emit:
+  - "@typespec/openapi3"
+
+output-dir: "{cwd}/dist"

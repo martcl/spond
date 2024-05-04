@@ -1,0 +1,1558 @@
+openapi: 3.0.0
+info:
+  title: Unofficial documentation for the Spond API (work in progress)
+  version: 0.0.0
+tags: []
+paths:
+  /clock:
+    get:
+      operationId: NClock_get
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          headers:
+            ETag:
+              required: true
+              schema:
+                type: string
+            Cf-Cache-Status:
+              required: true
+              schema:
+                type: string
+            X-Frame-Options:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - SAMEORIGIN
+            X-Content-Type-Options:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - nosniff
+            X-XSS-Protection:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - 1; mode=block
+            X-Spond-Release:
+              required: true
+              schema:
+                type: string
+            X-Spond-Requestid:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  time:
+                    type: string
+                    format: date-time
+                required:
+                  - time
+  /group:
+    post:
+      operationId: NGroup_post
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GroupDetailed'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateGroup'
+      security:
+        - BearerAuth: []
+  /groups:
+    get:
+      operationId: NGroups_list
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GroupDetailed'
+      security:
+        - BearerAuth: []
+  /groups/favorites:
+    get:
+      operationId: NFavorites_list
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FavoriteGroup'
+      security:
+        - BearerAuth: []
+  /hash:
+    get:
+      operationId: NHash_get
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          headers:
+            ETag:
+              required: true
+              schema:
+                type: string
+            Cf-Cache-Status:
+              required: true
+              schema:
+                type: string
+            X-Frame-Options:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - SAMEORIGIN
+            X-Content-Type-Options:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - nosniff
+            X-XSS-Protection:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - 1; mode=block
+            X-Spond-Release:
+              required: true
+              schema:
+                type: string
+            X-Spond-Requestid:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserHash'
+      security:
+        - BearerAuth: []
+  /login:
+    post:
+      operationId: NLogin_post
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          headers:
+            ETag:
+              required: true
+              schema:
+                type: string
+            Cf-Cache-Status:
+              required: true
+              schema:
+                type: string
+            X-Frame-Options:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - SAMEORIGIN
+            X-Content-Type-Options:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - nosniff
+            X-XSS-Protection:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - 1; mode=block
+            X-Spond-Release:
+              required: true
+              schema:
+                type: string
+            X-Spond-Requestid:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+  /login/create:
+    post:
+      operationId: NLogin_createAccount
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          headers:
+            ETag:
+              required: true
+              schema:
+                type: string
+            Cf-Cache-Status:
+              required: true
+              schema:
+                type: string
+            X-Frame-Options:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - SAMEORIGIN
+            X-Content-Type-Options:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - nosniff
+            X-XSS-Protection:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - 1; mode=block
+            X-Spond-Release:
+              required: true
+              schema:
+                type: string
+            X-Spond-Requestid:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAccountResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAccount'
+  /login/verify:
+    post:
+      operationId: NLogin_verifyAccount
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          headers:
+            ETag:
+              required: true
+              schema:
+                type: string
+            Cf-Cache-Status:
+              required: true
+              schema:
+                type: string
+            X-Frame-Options:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - SAMEORIGIN
+            X-Content-Type-Options:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - nosniff
+            X-XSS-Protection:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - 1; mode=block
+            X-Spond-Release:
+              required: true
+              schema:
+                type: string
+            X-Spond-Requestid:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VerifyAccount'
+  /posts:
+    get:
+      operationId: NPosts_list
+      parameters:
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: includeComments
+          in: query
+          required: true
+          schema:
+            type: boolean
+        - name: includeReadStatus
+          in: query
+          required: true
+          schema:
+            type: boolean
+        - name: includeSeenCount
+          in: query
+          required: true
+          schema:
+            type: boolean
+        - name: max
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+      security:
+        - BearerAuth: []
+  /profile:
+    get:
+      operationId: NProfile_get
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          headers:
+            ETag:
+              required: true
+              schema:
+                type: string
+            Cf-Cache-Status:
+              required: true
+              schema:
+                type: string
+            X-Frame-Options:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - SAMEORIGIN
+            X-Content-Type-Options:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - nosniff
+            X-XSS-Protection:
+              required: true
+              schema:
+                type: string
+                enum:
+                  - 1; mode=block
+            X-Spond-Release:
+              required: true
+              schema:
+                type: string
+            X-Spond-Requestid:
+              required: true
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonalProfile'
+      security:
+        - BearerAuth: []
+  /sponds:
+    get:
+      operationId: NSponds_list
+      parameters:
+        - name: includeComments
+          in: query
+          required: true
+          schema:
+            type: boolean
+        - name: includeHidden
+          in: query
+          required: true
+          schema:
+            type: boolean
+        - name: addProfileInfo
+          in: query
+          required: true
+          schema:
+            type: boolean
+        - name: scheduled
+          in: query
+          required: true
+          schema:
+            type: boolean
+        - name: order
+          in: query
+          required: true
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+        - name: max
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: groupId
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: minEndTimestamp
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+        - name: maxEndTimestamp
+          in: query
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+      security:
+        - BearerAuth: []
+    post:
+      operationId: NSponds_post
+      parameters: []
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEvent'
+      security:
+        - BearerAuth: []
+  /sponds/{eventId}/acceptHost:
+    post:
+      operationId: NSponds_acceptHost
+      parameters:
+        - name: eventId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - BearerAuth: []
+  /sponds/{eventId}/declineHost:
+    post:
+      operationId: NSponds_declineHost
+      parameters:
+        - name: eventId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: object
+      security:
+        - BearerAuth: []
+components:
+  schemas:
+    Attachment:
+      type: object
+      required:
+        - id
+        - media
+        - type
+        - title
+        - ownerId
+        - timestamp
+      properties:
+        id:
+          type: string
+        media:
+          type: string
+        type:
+          type: integer
+        title:
+          type: string
+        ownerId:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+    Comment:
+      type: object
+      required:
+        - id
+        - fromProfileId
+        - text
+        - timestamp
+        - reactions
+      properties:
+        id:
+          type: string
+        fromProfileId:
+          type: string
+        text:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        reactions:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int32
+    CreateAccount:
+      type: object
+      required:
+        - email
+        - firstName
+        - lastName
+        - password
+        - locale
+        - intMarketing
+        - extMarketing
+        - dateOfBirth
+        - gender
+      properties:
+        email:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        password:
+          type: string
+          format: password
+        locale:
+          type: string
+        intMarketing:
+          type: boolean
+        extMarketing:
+          type: boolean
+        dateOfBirth:
+          type: string
+        gender:
+          type: string
+    CreateAccountResponse:
+      type: object
+      required:
+        - method
+        - primaryEmail
+      properties:
+        method:
+          type: string
+        primaryEmail:
+          type: string
+    CreateEvent:
+      type: object
+      required:
+        - heading
+        - description
+        - spondType
+        - startTimestamp
+        - openEnded
+        - commentsDisabled
+        - meetupPrior
+        - maxAccepted
+        - rsvpDate
+        - location
+        - owners
+        - visibility
+        - participantsHidden
+        - autoReminderType
+        - matchInfo
+        - autoAccept
+        - fileInput
+        - attachments
+        - type
+        - tasks
+        - recipients
+      properties:
+        heading:
+          type: string
+        description:
+          type: string
+        spondType:
+          type: string
+        startTimestamp:
+          type: string
+          format: date-time
+        openEnded:
+          type: boolean
+        commentsDisabled:
+          type: boolean
+        meetupPrior:
+          type: string
+        maxAccepted:
+          type: integer
+        rsvpDate:
+          type: string
+          format: date-time
+        location:
+          $ref: '#/components/schemas/Location'
+        owners:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+            required:
+              - id
+        visibility:
+          type: string
+        participantsHidden:
+          type: boolean
+        autoReminderType:
+          type: string
+        matchInfo: {}
+        autoAccept:
+          type: boolean
+        fileInput:
+          type: string
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+        type:
+          type: string
+        tasks:
+          type: object
+          properties:
+            openTasks:
+              type: array
+              items:
+                $ref: '#/components/schemas/Task'
+            assignedTasks:
+              type: array
+              items: {}
+          required:
+            - openTasks
+            - assignedTasks
+        recipients:
+          type: object
+          properties:
+            groupMembers:
+              type: array
+              items:
+                type: string
+            group:
+              type: object
+              properties:
+                id:
+                  type: string
+              required:
+                - id
+          required:
+            - groupMembers
+            - group
+    CreateGroup:
+      type: object
+      required:
+        - name
+        - type
+        - activity
+        - contactInfoHidden
+        - primaryContact
+        - chatAgeLimit
+        - subGroups
+      properties:
+        name:
+          type: string
+        type:
+          type: integer
+        activity:
+          type: string
+        contactInfoHidden:
+          type: boolean
+        primaryContact:
+          type: string
+        chatAgeLimit:
+          type: integer
+        subGroups:
+          type: array
+          items: {}
+    Event:
+      type: object
+      required:
+        - id
+        - creatorId
+        - owners
+        - heading
+        - description
+        - startTimestamp
+        - endTimestamp
+        - recipients
+        - responses
+        - tasks
+        - comments
+        - attachments
+        - createdTime
+        - expired
+        - visibility
+        - behalfOfIds
+        - autoAccept
+        - hidden
+        - autoReminderType
+        - participantsHidden
+        - registerd
+        - commentsDisabled
+        - type
+        - updated
+        - matchEvent
+      properties:
+        id:
+          type: string
+        creatorId:
+          type: string
+        owners:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventOwner'
+        heading:
+          type: string
+        description:
+          type: string
+        startTimestamp:
+          type: string
+          format: date-time
+        endTimestamp:
+          type: string
+          format: date-time
+        recipients:
+          type: object
+          properties:
+            group:
+              $ref: '#/components/schemas/Group'
+          required:
+            - group
+        responses:
+          $ref: '#/components/schemas/EventResponses'
+        tasks:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+        createdTime:
+          type: string
+          format: date-time
+        expired:
+          type: boolean
+        visibility:
+          type: string
+        behalfOfIds:
+          type: array
+          items:
+            type: string
+        autoAccept:
+          type: boolean
+        hidden:
+          type: boolean
+        autoReminderType:
+          type: string
+        participantsHidden:
+          type: boolean
+        registerd:
+          type: boolean
+        commentsDisabled:
+          type: boolean
+        type:
+          type: string
+        updated:
+          type: integer
+          format: int32
+        matchEvent:
+          type: boolean
+    EventOwner:
+      type: object
+      required:
+        - id
+        - firstName
+        - lastName
+        - unableToReach
+        - imageUrl
+        - response
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        unableToReach:
+          type: boolean
+        imageUrl:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        dateOfBirth:
+          type: string
+        response:
+          type: string
+        appUser:
+          type: boolean
+    EventResponses:
+      type: object
+      required:
+        - acceptedIds
+        - declinedIds
+        - unansweredIds
+        - whaitinglistIds
+        - declineMessages
+      properties:
+        acceptedIds:
+          type: array
+          items:
+            type: string
+        declinedIds:
+          type: array
+          items:
+            type: string
+        unansweredIds:
+          type: array
+          items:
+            type: string
+        whaitinglistIds:
+          type: array
+          items:
+            type: string
+        declineMessages:
+          nullable: true
+    FavoriteGroup:
+      type: object
+      required:
+        - groupId
+        - subGroupId
+        - timestamp
+      properties:
+        groupId:
+          type: string
+        subGroupId:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+    Group:
+      type: object
+      required:
+        - id
+        - contactPersonId
+        - name
+        - imageUrl
+        - subGroups
+        - createdTime
+        - members
+        - membershipRequests
+      properties:
+        id:
+          type: string
+        contactPersonId:
+          type: string
+        name:
+          type: string
+        imageUrl:
+          type: string
+        subGroups:
+          type: array
+          items:
+            $ref: '#/components/schemas/SubGroup'
+        createdTime:
+          type: string
+          format: date-time
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMember'
+        membershipRequests:
+          type: object
+          properties:
+            id:
+              type: string
+            firstName:
+              type: string
+            lastName:
+              type: string
+            email:
+              type: string
+            phoneNumber:
+              type: string
+            respondent:
+              type: boolean
+            profile:
+              type: object
+              properties:
+                id:
+                  type: string
+                firstName:
+                  type: string
+                lastName:
+                  type: string
+                unableToReach:
+                  type: boolean
+                imageUrl:
+                  type: string
+                phoneNumber:
+                  type: string
+                email:
+                  type: string
+                dateOfBirth:
+                  type: string
+                contactMethod:
+                  type: string
+              required:
+                - id
+                - firstName
+                - lastName
+                - unableToReach
+                - imageUrl
+                - contactMethod
+            guardians:
+              type: array
+              items:
+                $ref: '#/components/schemas/GroupMember'
+            creator:
+              type: boolean
+            address:
+              type: array
+              items:
+                type: string
+          required:
+            - id
+            - firstName
+            - lastName
+            - email
+            - phoneNumber
+            - respondent
+            - guardians
+    GroupDetailed:
+      type: object
+      required:
+        - id
+        - contactPerson
+        - name
+        - welcomeMessage
+        - activity
+        - createdTime
+        - members
+        - subGroups
+        - experiments
+        - shareContactInfo
+        - adminsCanAddMembers
+        - contactInfoHidden
+        - memberPermissions
+        - guardianPermissions
+        - eventVisibility
+        - chatAgeLimit
+        - type
+        - invitedToAppTime
+        - signUpUrl
+        - countryCode
+        - allowSmsNag
+        - bonusEnabled
+        - fieldDefs
+        - defaultFields
+        - roles
+        - addressFormat
+        - allowPrivatePayoutAccounts
+      properties:
+        id:
+          type: string
+        contactPerson:
+          $ref: '#/components/schemas/User'
+        name:
+          type: string
+        welcomeMessage:
+          type: string
+        activity:
+          type: string
+        createdTime:
+          type: string
+          format: date-time
+        members:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMember'
+        subGroups:
+          type: array
+          items:
+            type: string
+        experiments:
+          type: object
+          additionalProperties: {}
+        shareContactInfo:
+          type: boolean
+        adminsCanAddMembers:
+          type: boolean
+        contactInfoHidden:
+          type: boolean
+        memberPermissions:
+          type: array
+          items:
+            type: string
+        guardianPermissions:
+          type: array
+          items:
+            type: string
+        eventVisibility:
+          type: string
+        chatAgeLimit:
+          type: integer
+        type:
+          type: integer
+        invitedToAppTime:
+          type: string
+          format: date-time
+        signUpUrl:
+          type: string
+        countryCode:
+          type: string
+        allowSmsNag:
+          type: boolean
+        bonusEnabled:
+          type: boolean
+        fieldDefs:
+          type: object
+          additionalProperties: {}
+        defaultFields:
+          type: object
+          additionalProperties: {}
+        roles:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupRole'
+        addressFormat:
+          type: array
+          items:
+            type: string
+        allowPrivatePayoutAccounts:
+          type: boolean
+    GroupMember:
+      type: object
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - phoneNumber
+        - respondent
+        - guardians
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phoneNumber:
+          type: string
+        respondent:
+          type: boolean
+        profile:
+          type: object
+          properties:
+            id:
+              type: string
+            firstName:
+              type: string
+            lastName:
+              type: string
+            unableToReach:
+              type: boolean
+            imageUrl:
+              type: string
+            phoneNumber:
+              type: string
+            email:
+              type: string
+            dateOfBirth:
+              type: string
+            contactMethod:
+              type: string
+          required:
+            - id
+            - firstName
+            - lastName
+            - unableToReach
+            - imageUrl
+            - contactMethod
+        guardians:
+          type: array
+          items:
+            $ref: '#/components/schemas/GroupMember'
+        creator:
+          type: boolean
+        address:
+          type: array
+          items:
+            type: string
+    GroupRole:
+      type: object
+      required:
+        - id
+        - name
+        - permissions
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        permissions:
+          type: array
+          items:
+            type: string
+    Location:
+      type: object
+      required:
+        - latitude
+        - longitude
+        - addressLine
+        - featureName
+        - country
+        - administrativeAreaLevel1
+        - administrativeAreaLevel2
+        - locality
+        - feature
+        - address
+      properties:
+        latitude:
+          type: integer
+        longitude:
+          type: integer
+        addressLine:
+          type: integer
+        featureName:
+          type: string
+        country:
+          type: string
+        administrativeAreaLevel1:
+          type: string
+        administrativeAreaLevel2:
+          type: string
+        locality:
+          type: string
+        feature:
+          type: string
+        address:
+          type: string
+    LoginResponse:
+      type: object
+      required:
+        - loginToken
+        - passwordToken
+      properties:
+        loginToken:
+          type: string
+        passwordToken:
+          type: string
+          format: password
+    PersonalProfile:
+      type: object
+      required:
+        - id
+        - firstName
+        - lastName
+        - unableToReach
+        - imageUrl
+        - primaryEmail
+        - dummy
+        - trackingId
+        - timezone
+        - unsubscribeCode
+        - locale
+        - countryCode
+        - internal
+        - deleted
+        - contactMethod
+        - alternateEmails
+        - preferences
+        - gender
+        - tosVersion
+        - formattedPhoneNumber
+        - contact
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        unableToReach:
+          type: boolean
+        imageUrl:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        dateOfBirth:
+          type: string
+        primaryEmail:
+          type: string
+        dummy:
+          type: boolean
+        trackingId:
+          type: string
+        timezone:
+          type: string
+        unsubscribeCode:
+          type: string
+        locale:
+          type: string
+        countryCode:
+          type: string
+        internal:
+          type: boolean
+        deleted:
+          type: boolean
+        contactMethod:
+          type: string
+        alternateEmails:
+          type: array
+          items:
+            type: string
+        preferences:
+          type: object
+          properties:
+            globalPushPreferences:
+              type: object
+              properties:
+                acceptPushDisabled:
+                  type: boolean
+                declinePushDisabled:
+                  type: boolean
+                acceptTaskPushDisabled:
+                  type: boolean
+                declineTaskPushDisabled:
+                  type: boolean
+                commentNotifications:
+                  type: string
+                invitationPushDisabled:
+                  type: boolean
+                postPushDisabled:
+                  type: boolean
+                reminderPushDisabled:
+                  type: boolean
+                scheduledPrealertPushDisabled:
+                  type: boolean
+                scheduledSentPushDisabled:
+                  type: boolean
+                bonusContributePushDisabled:
+                  type: boolean
+                bonusAchievementPushDisabled:
+                  type: boolean
+                matchNotificationsPushDisabled:
+                  type: boolean
+                availablePushDisabled:
+                  type: boolean
+                unavailablePushDisabled:
+                  type: boolean
+                availabilityReminderPushDisabled:
+                  type: boolean
+              required:
+                - acceptPushDisabled
+                - declinePushDisabled
+                - acceptTaskPushDisabled
+                - declineTaskPushDisabled
+                - commentNotifications
+                - invitationPushDisabled
+                - postPushDisabled
+                - reminderPushDisabled
+                - scheduledPrealertPushDisabled
+                - scheduledSentPushDisabled
+                - bonusContributePushDisabled
+                - bonusAchievementPushDisabled
+                - matchNotificationsPushDisabled
+                - availablePushDisabled
+                - unavailablePushDisabled
+                - availabilityReminderPushDisabled
+            groupPushPreferences:
+              type: object
+              additionalProperties: {}
+            targetedAdsDisabled:
+              type: boolean
+            cashbackPromoDisabled:
+              type: boolean
+            partnerPromoDisabled:
+              type: boolean
+            optionalSettings:
+              type: object
+              additionalProperties: {}
+          required:
+            - globalPushPreferences
+            - groupPushPreferences
+            - targetedAdsDisabled
+            - cashbackPromoDisabled
+            - partnerPromoDisabled
+            - optionalSettings
+        gender:
+          type: string
+        tosVersion:
+          type: integer
+        formattedPhoneNumber:
+          type: string
+        contact:
+          type: boolean
+    Post:
+      type: object
+      required:
+        - id
+        - type
+        - groupId
+        - subGroupIds
+        - title
+        - body
+        - ownerId
+        - timestamp
+        - media
+        - reactions
+        - attachments
+        - visibility
+        - unread
+        - commentsDisabled
+        - seenCount
+        - muted
+        - selectMemberPoll
+        - comments
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        groupId:
+          type: string
+        subGroupIds:
+          type: array
+          items:
+            type: string
+        title:
+          type: string
+        body:
+          type: string
+        ownerId:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        media:
+          type: array
+          items:
+            $ref: '#/components/schemas/PostMedia'
+        reactions:
+          type: object
+          additionalProperties:
+            type: object
+            additionalProperties:
+              type: integer
+              format: int32
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Attachment'
+        visibility:
+          type: string
+        unread:
+          type: boolean
+        commentsDisabled:
+          type: boolean
+        seenCount:
+          type: integer
+        muted:
+          type: boolean
+        selectMemberPoll:
+          type: boolean
+        comments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+    PostMedia:
+      type: object
+      required:
+        - url
+        - type
+      properties:
+        url:
+          type: string
+        width:
+          type: integer
+        height:
+          type: integer
+        type:
+          type: string
+    SubGroup:
+      type: object
+      required:
+        - id
+        - name
+        - color
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        color:
+          type: string
+    Task:
+      type: object
+      required:
+        - id
+        - name
+        - description
+        - type
+        - adultsOnly
+        - limit
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        type:
+          type: string
+        adultsOnly:
+          type: boolean
+        limit:
+          type: integer
+    User:
+      type: object
+      required:
+        - id
+        - firstName
+        - lastName
+        - unableToReach
+        - imageUrl
+      properties:
+        id:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        unableToReach:
+          type: boolean
+        imageUrl:
+          type: string
+        phoneNumber:
+          type: string
+        email:
+          type: string
+        dateOfBirth:
+          type: string
+    UserHash:
+      type: object
+      required:
+        - webUserHash
+        - androidUserHash
+        - iosUserHash
+        - value
+      properties:
+        webUserHash:
+          type: string
+        androidUserHash:
+          type: string
+        iosUserHash:
+          type: string
+        value:
+          type: string
+    VerifyAccount:
+      type: object
+      required:
+        - email
+        - verificationCode
+      properties:
+        email:
+          type: string
+        verificationCode:
+          type: string
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+servers:
+  - url: https://api.spond.com/core/v1/
+    description: Spond API
+    variables: {}

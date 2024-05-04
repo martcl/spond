@@ -1,11 +1,6 @@
 const { SPOND_API_URL } = require('./utils');
 
-/**
- * Creates a new access token
- * @param {string} username
- * @param {string} password
- * @returns {Promise<string>} User access token
- */
+
 async function createUserAccessToken(username, password) {
   const response = await fetch(SPOND_API_URL + 'login', {
     method: 'POST',

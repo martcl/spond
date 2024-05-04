@@ -4,14 +4,16 @@ on:
   push:
     branches:
       - master
-env:
-  SPOND_API_URL: ${{ secrets.SPOND_API_URL }}
-  SPOND_USERNAME: ${{ secrets.SPOND_USERNAME }}
-  SPOND_PASSWORD: ${{ secrets.SPOND_PASSWORD }}
+  pull_request:
+  workflow_dispatch:
 
 jobs:
-  tests:
+  deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
     steps:
       - name: git checkout
         uses: actions/checkout@v3
@@ -19,10 +21,17 @@ jobs:
       - name: setup node
         uses: actions/setup-node@v3
         with:
-          node-version-file: '.nvmrc'
+          node-version-file: ".nvmrc"
 
       - name: install dependancies
         run: npm ci
 
-      - name: run tests
-        run: npm test
+      - name: run build
+        run: npm run build
+
+      - name: Github pages deploy
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist

@@ -5,9 +5,8 @@
   "main": "src/index.js",
   "types": "types/index.d.ts",
   "scripts": {
-    "test": "NODE_ENV=test && jest",
-    "prebuild:types": "rimraf ./types",
-    "build:types": "tsc -p ./tsconfig.json --outDir types && api-extractor run"
+    "watch": "tsp compile typesec --watch",
+    "build": "tsp compile typesec && openapi-typescript ./dist/@typespec/openapi3/openapi.yaml -o ./types.d.ts"
   },
   "keywords": [
     "spond"
@@ -16,16 +15,16 @@
     "src",
     "types"
   ],
-  "author": "martin clementz",
-  "license": "GPL-3.0",
+  "author": "martcl",
   "publishConfig": {
     "@martcl:registry": "https://npm.pkg.github.com"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7.36.4",
-    "dotenv": "^16.3.1",
+    "@typespec/compiler": "^0.55.0",
+    "@typespec/http": "^0.55.0",
+    "@typespec/openapi3": "^0.55.0",
+    "@typespec/rest": "^0.55.0",
     "jest": "^29.6.2",
-    "rimraf": "^5.0.1",
-    "typescript": "^5.1.6"
+    "openapi-typescript": "^6.7.5"
   }
 }
