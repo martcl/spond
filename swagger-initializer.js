@@ -19,6 +19,7 @@ window.onload = function() {
     plugins: [
       SwaggerUIBundle.plugins.DownloadUrl
     ],
+    supportedSubmitMethods: [],
     layout: "StandaloneLayout"
   });
 
