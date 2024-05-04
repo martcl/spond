@@ -4,7 +4,7 @@ This is an unofficial Documentation for the Spond API. I made this becouse I lik
 
 This codebase is a work in progress and does not reflect the full capabilities of the Spond API.
 
-Visit the Swagger documentation at [martcl.github.io/spond](martcl.github.io/spond)
+Visit the Swagger documentation at [https://martcl.github.io/spond/](https://martcl.github.io/spond/)
 
 
 
