@@ -1,6 +1,6 @@
 # Spond API documentation
 
-This is an unofficial Documentation for the Spond API. I made this becouse I like Spond and want to use Spond events out side of spond.  
+This is an unofficial Documentation for the Spond API. I made this because I like Spond and want to use Spond events out side of spond.  
 
 This codebase is a work in progress and does not reflect the full capabilities of the Spond API.
 
