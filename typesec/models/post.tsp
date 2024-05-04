@@ -27,7 +27,7 @@ model Post {
 }
 
 model PostMedia {
-    url: string;
+    url: url;
     width?: integer;
     height?: integer;
     type: string;

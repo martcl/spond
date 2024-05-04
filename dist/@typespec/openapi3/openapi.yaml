@@ -1,51 +1,26 @@
 openapi: 3.0.0
 info:
-  title: Unofficial documentation for the Spond API (work in progress)
+  title: Unofficial Spond API documentation
+  description: |-
+    This project is a just something I made to map the different endpoints of the Spond API, so
+    I can use them in other projects. Through this project, I found out that the API is kind
+    of messy and does not return the minimum amount of data needed for the client to work.
+    Be aware that this project is not affiliated with Spond in any way.
   version: 0.0.0
-tags: []
+tags:
+  - name: Profile
+  - name: Events
+  - name: Groups
+  - name: Posts
 paths:
   /clock:
     get:
       operationId: NClock_get
+      description: Random endpoint that returns the current time.
       parameters: []
       responses:
         '200':
           description: The request has succeeded.
-          headers:
-            ETag:
-              required: true
-              schema:
-                type: string
-            Cf-Cache-Status:
-              required: true
-              schema:
-                type: string
-            X-Frame-Options:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - SAMEORIGIN
-            X-Content-Type-Options:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - nosniff
-            X-XSS-Protection:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - 1; mode=block
-            X-Spond-Release:
-              required: true
-              schema:
-                type: string
-            X-Spond-Requestid:
-              required: true
-              schema:
-                type: string
           content:
             application/json:
               schema:
@@ -58,7 +33,10 @@ paths:
                   - time
   /group:
     post:
+      tags:
+        - Groups
       operationId: NGroup_post
+      description: Create a new group.
       parameters: []
       responses:
         '200':
@@ -77,7 +55,10 @@ paths:
         - BearerAuth: []
   /groups:
     get:
+      tags:
+        - Groups
       operationId: NGroups_list
+      description: Get a list of groups.
       parameters: []
       responses:
         '200':
@@ -92,7 +73,10 @@ paths:
         - BearerAuth: []
   /groups/favorites:
     get:
-      operationId: NFavorites_list
+      tags:
+        - Groups
+      operationId: NGroups_listFavorites
+      description: Get a list of favorite groups.
       parameters: []
       responses:
         '200':
@@ -107,46 +91,14 @@ paths:
         - BearerAuth: []
   /hash:
     get:
+      tags:
+        - Profile
       operationId: NHash_get
+      description: Get the user hashes. (idk, what this is for)
       parameters: []
       responses:
         '200':
           description: The request has succeeded.
-          headers:
-            ETag:
-              required: true
-              schema:
-                type: string
-            Cf-Cache-Status:
-              required: true
-              schema:
-                type: string
-            X-Frame-Options:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - SAMEORIGIN
-            X-Content-Type-Options:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - nosniff
-            X-XSS-Protection:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - 1; mode=block
-            X-Spond-Release:
-              required: true
-              schema:
-                type: string
-            X-Spond-Requestid:
-              required: true
-              schema:
-                type: string
           content:
             application/json:
               schema:
@@ -155,46 +107,14 @@ paths:
         - BearerAuth: []
   /login:
     post:
+      tags:
+        - Profile
       operationId: NLogin_post
+      description: Login to the spond account.
       parameters: []
       responses:
         '200':
           description: The request has succeeded.
-          headers:
-            ETag:
-              required: true
-              schema:
-                type: string
-            Cf-Cache-Status:
-              required: true
-              schema:
-                type: string
-            X-Frame-Options:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - SAMEORIGIN
-            X-Content-Type-Options:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - nosniff
-            X-XSS-Protection:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - 1; mode=block
-            X-Spond-Release:
-              required: true
-              schema:
-                type: string
-            X-Spond-Requestid:
-              required: true
-              schema:
-                type: string
           content:
             application/json:
               schema:
@@ -215,46 +135,14 @@ paths:
                 - password
   /login/create:
     post:
+      tags:
+        - Profile
       operationId: NLogin_createAccount
+      description: Create a new spond account. Email can be a phone number.
       parameters: []
       responses:
         '200':
           description: The request has succeeded.
-          headers:
-            ETag:
-              required: true
-              schema:
-                type: string
-            Cf-Cache-Status:
-              required: true
-              schema:
-                type: string
-            X-Frame-Options:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - SAMEORIGIN
-            X-Content-Type-Options:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - nosniff
-            X-XSS-Protection:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - 1; mode=block
-            X-Spond-Release:
-              required: true
-              schema:
-                type: string
-            X-Spond-Requestid:
-              required: true
-              schema:
-                type: string
           content:
             application/json:
               schema:
@@ -267,46 +155,14 @@ paths:
               $ref: '#/components/schemas/CreateAccount'
   /login/verify:
     post:
+      tags:
+        - Profile
       operationId: NLogin_verifyAccount
+      description: Verify the account with the code sent to the email.
       parameters: []
       responses:
         '200':
           description: The request has succeeded.
-          headers:
-            ETag:
-              required: true
-              schema:
-                type: string
-            Cf-Cache-Status:
-              required: true
-              schema:
-                type: string
-            X-Frame-Options:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - SAMEORIGIN
-            X-Content-Type-Options:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - nosniff
-            X-XSS-Protection:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - 1; mode=block
-            X-Spond-Release:
-              required: true
-              schema:
-                type: string
-            X-Spond-Requestid:
-              required: true
-              schema:
-                type: string
           content:
             application/json:
               schema:
@@ -319,7 +175,10 @@ paths:
               $ref: '#/components/schemas/VerifyAccount'
   /posts:
     get:
+      tags:
+        - Posts
       operationId: NPosts_list
+      description: Get a list of posts.
       parameters:
         - name: type
           in: query
@@ -359,46 +218,14 @@ paths:
         - BearerAuth: []
   /profile:
     get:
+      tags:
+        - Profile
       operationId: NProfile_get
+      description: Get the personal profile of the user.
       parameters: []
       responses:
         '200':
           description: The request has succeeded.
-          headers:
-            ETag:
-              required: true
-              schema:
-                type: string
-            Cf-Cache-Status:
-              required: true
-              schema:
-                type: string
-            X-Frame-Options:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - SAMEORIGIN
-            X-Content-Type-Options:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - nosniff
-            X-XSS-Protection:
-              required: true
-              schema:
-                type: string
-                enum:
-                  - 1; mode=block
-            X-Spond-Release:
-              required: true
-              schema:
-                type: string
-            X-Spond-Requestid:
-              required: true
-              schema:
-                type: string
           content:
             application/json:
               schema:
@@ -407,7 +234,10 @@ paths:
         - BearerAuth: []
   /sponds:
     get:
+      tags:
+        - Events
       operationId: NSponds_list
+      description: Get a list of events.
       parameters:
         - name: includeComments
           in: query
@@ -471,7 +301,10 @@ paths:
       security:
         - BearerAuth: []
     post:
+      tags:
+        - Events
       operationId: NSponds_post
+      description: Create a new event.
       parameters: []
       responses:
         '200':
@@ -490,7 +323,10 @@ paths:
         - BearerAuth: []
   /sponds/{eventId}/acceptHost:
     post:
+      tags:
+        - Events
       operationId: NSponds_acceptHost
+      description: Accept the invitation to an event.
       parameters:
         - name: eventId
           in: path
@@ -508,7 +344,10 @@ paths:
         - BearerAuth: []
   /sponds/{eventId}/declineHost:
     post:
+      tags:
+        - Events
       operationId: NSponds_declineHost
+      description: Decline the invitation to an event.
       parameters:
         - name: eventId
           in: path
@@ -540,6 +379,7 @@ components:
           type: string
         media:
           type: string
+          format: uri
         type:
           type: integer
         title:
@@ -863,6 +703,7 @@ components:
           type: boolean
         imageUrl:
           type: string
+          format: uri
         phoneNumber:
           type: string
         email:
@@ -934,6 +775,7 @@ components:
           type: string
         imageUrl:
           type: string
+          format: uri
         subGroups:
           type: array
           items:
@@ -973,6 +815,7 @@ components:
                   type: boolean
                 imageUrl:
                   type: string
+                  format: uri
                 phoneNumber:
                   type: string
                 email:
@@ -1086,6 +929,7 @@ components:
           format: date-time
         signUpUrl:
           type: string
+          format: uri
         countryCode:
           type: string
         allowSmsNag:
@@ -1144,6 +988,7 @@ components:
               type: boolean
             imageUrl:
               type: string
+              format: uri
             phoneNumber:
               type: string
             email:
@@ -1264,6 +1109,7 @@ components:
           type: boolean
         imageUrl:
           type: string
+          format: uri
         phoneNumber:
           type: string
         email:
@@ -1456,6 +1302,7 @@ components:
       properties:
         url:
           type: string
+          format: uri
         width:
           type: integer
         height:
@@ -1516,6 +1363,7 @@ components:
           type: boolean
         imageUrl:
           type: string
+          format: uri
         phoneNumber:
           type: string
         email:

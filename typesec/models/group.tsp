@@ -9,7 +9,7 @@ model Group {
     id: string;
     contactPersonId: User.id;
     name: string;
-    imageUrl: string;
+    imageUrl: url;
     subGroups: SubGroup[];
     createdTime: utcDateTime;
     members: GroupMember[];
@@ -37,7 +37,7 @@ model GroupDetailed {
     chatAgeLimit: integer;
     type: integer;
     invitedToAppTime: utcDateTime;
-    signUpUrl: string;
+    signUpUrl: url;
     countryCode: string;
     allowSmsNag: boolean;
     bonusEnabled: boolean;

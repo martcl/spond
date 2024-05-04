@@ -10,7 +10,7 @@ model User {
     firstName: string;
     lastName: string;
     unableToReach: boolean;
-    imageUrl: string;
+    imageUrl: url;
     phoneNumber?: string;
     email?: string;
     dateOfBirth?: string;

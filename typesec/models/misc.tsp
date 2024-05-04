@@ -6,21 +6,9 @@ using TypeSpec.Rest;
 using TypeSpec.Http;
 
 
-model ResponseHeaders {
-    @header("ETag") eTag: string;
-    @header("Cf-Cache-Status") cacheStatus: string;
-    @header("X-Frame-Options") contentType: "SAMEORIGIN";
-    @header("X-Content-Type-Options") contentOptions: "nosniff";
-    @header("X-XSS-Protection") xssProtection: "1; mode=block";
-
-    // Spond API version (probably /o/)
-    @header("X-Spond-Release") release: string;
-    @header("X-Spond-Requestid") requestId: string;
-};
-
 model Attachment {
     id: string;
-    media: string;
+    media: url;
     type: integer;
     title: string;
     ownerId: User.id;
@@ -56,5 +44,6 @@ model Task {
     adultsOnly: boolean;
     limit: integer;
 }
+
 
 
